@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darts Score Pro — Support</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #052e10, #14532d);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .header .icon { font-size: 64px; margin-bottom: 12px; }
+        .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+        .header p { font-size: 16px; opacity: 0.7; }
+
+        /* ── Info Cards ── */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #6e6e73;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #3a3a3c;
+        }
+
+        /* ── Form Section ── */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #1d1d1f;
+        }
+
+        .form-card .subtitle {
+            font-size: 14px;
+            color: #6e6e73;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #3a3a3c;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            color: #1d1d1f;
+            background: #fafafa;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #16a34a;
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236e6e73' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover { background: #15803d; }
+        .submit-btn:active { background: #166534; }
+
+        /* ── Success Message ── */
+        .success {
+            display: none;
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .success .checkmark { font-size: 36px; margin-bottom: 8px; }
+        .success h3 { color: #16a34a; font-size: 18px; margin-bottom: 4px; }
+        .success p { color: #4ade80; font-size: 14px; }
+
+        /* ── Privacy Card ── */
+        .privacy {
+            background: #f0fdf4;
+            border: 1.5px solid #bbf7d0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .privacy h2 {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #16a34a;
+            margin-bottom: 8px;
+        }
+
+        .privacy p {
+            font-size: 14px;
+            color: #15803d;
+            line-height: 1.5;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #6e6e73;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="icon">🎯</div>
+            <h1>Darts Score Pro</h1>
+            <p>Multi-Game Darts Scorekeeper</p>
+        </div>
+
+        <!-- About -->
+        <div class="card">
+            <h2>About</h2>
+            <p>Darts Score Pro helps families and friends track their darts game history, wins, losses, break stats, and head-to-head rivalries — all stored privately on your device.</p>
+        </div>
+
+        <!-- Privacy -->
+        <div class="privacy">
+            <h2>🔒 Privacy</h2>
+            <p>Darts Score Pro stores all data locally on your device. We do not collect, share, or sell any personal information. No account is required.</p>
+        </div>
+
+        <!-- Support Form -->
+        <div class="form-card">
+            <h2>Get in Touch</h2>
+            <p class="subtitle">Have a question, found a bug, or want to suggest an improvement? Fill out the form below and we'll get back to you as soon as possible.</p>
+
+            <form id="supportForm" onsubmit="submitForm(event)">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Request Type</label>
+                    <select id="type" required>
+                        <option value="" disabled selected>Select a request type</option>
+                        <option value="Support Request">🛠 Support Request</option>
+                        <option value="Improvement Request">💡 Improvement Request</option>
+                        <option value="General Question">❓ General Question</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Describe your issue or suggestion in detail..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message 🎯</button>
+            </form>
+
+            <!-- Success Message -->
+            <div class="success" id="successMsg">
+                <div class="checkmark">✅</div>
+                <h3>Message Sent!</h3>
+                <p>Thanks for reaching out. We'll get back to you shortly.</p>
+            </div>
+        </div>
+
+        <div class="footer">© 2026 Darts Score Pro. All rights reserved.</div>
+    </div>
+
+    <script>
+        async function submitForm(e) {
+            e.preventDefault();
+
+            const name    = document.getElementById('name').value;
+            const email   = document.getElementById('email').value;
+            const type    = document.getElementById('type').value;
+            const message = document.getElementById('message').value;
+
+            // ── Option 1: Formspree (free, no backend needed) ──
+            // 1. Go to formspree.io and create a free account
+            // 2. Create a new form and get your endpoint URL
+            // 3. Replace the URL below with your Formspree endpoint
+            const FORMSPREE_URL = 'https://formspree.io/f/xkoalvwy';
+
+            try {
+                const response = await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, type, message })
+                });
+
+                if (response.ok) {
+                    document.getElementById('supportForm').style.display = 'none';
+                    document.getElementById('successMsg').style.display = 'block';
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch(err) {
+                alert('Something went wrong. Please email us directly.');
+            }
+        }
+    </script>
+</body>
+</html>
