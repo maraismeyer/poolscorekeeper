@@ -33,71 +33,80 @@ struct BreakStat {
 
 enum StatsEngine {
 
-    static func playerStats(matches: [Match], players: [String]) -> [PlayerStat] {
-        var allNames = Set<String>()
-        for m in matches {
-            allNames.insert(m.player1)
-            allNames.insert(m.player2)
+    static func playerStats(matches: [Match], players: [Player]) -> [PlayerStat] {
+        var playerStatsDict: [UUID: (name: String, wins: Int, losses: Int)] = [:]
+        
+        // Initialize with all players
+        for player in players {
+            playerStatsDict[player.id] = (name: player.name, wins: 0, losses: 0)
         }
-        let names = allNames.sorted()
-        return names.compactMap { name in
-            let wins = matches.filter { $0.winner == name }.count
-            let losses = matches.filter {
-                ($0.player1 == name || $0.player2 == name) && $0.winner != name
-            }.count
-            guard (wins + losses) > 0 else { return nil }
-            return PlayerStat(name: name, wins: wins, losses: losses)
-        }.sorted { $0.wins > $1.wins }
+        
+        // Count wins and losses
+        for match in matches where match.isValid {
+            guard let p1 = match.player1, let p2 = match.player2, let winner = match.winner else { continue }
+            
+            if winner.id == p1.id {
+                playerStatsDict[p1.id]?.wins += 1
+                playerStatsDict[p2.id]?.losses += 1
+            } else if winner.id == p2.id {
+                playerStatsDict[p2.id]?.wins += 1
+                playerStatsDict[p1.id]?.losses += 1
+            }
+        }
+        
+        return playerStatsDict.values
+            .filter { $0.wins + $0.losses > 0 }
+            .map { PlayerStat(name: $0.name, wins: $0.wins, losses: $0.losses) }
+            .sorted { $0.wins > $1.wins }
     }
 
-    static func headToHead(matches: [Match], players: [String]) -> [H2HStat] {
+    static func headToHead(matches: [Match], players: [Player]) -> [H2HStat] {
         var results: [H2HStat] = []
-        var allNames = Set<String>()
-        for m in matches {
-            allNames.insert(m.player1)
-            allNames.insert(m.player2)
-        }
-        let sortedPlayers = allNames.sorted()
+        let sortedPlayers = players.sorted { $0.name < $1.name }
 
         for i in 0..<sortedPlayers.count {
             for j in (i+1)..<sortedPlayers.count {
                 let p1 = sortedPlayers[i]
                 let p2 = sortedPlayers[j]
 
-                let relevant = matches.filter {
-                    ($0.player1 == p1 || $0.player2 == p1) &&
-                    ($0.player1 == p2 || $0.player2 == p2)
+                let relevant = matches.filter { match in
+                    guard match.isValid,
+                          let mp1 = match.player1, let mp2 = match.player2 else { return false }
+                    return (mp1.id == p1.id || mp2.id == p1.id) &&
+                           (mp1.id == p2.id || mp2.id == p2.id)
                 }
 
-                let w1 = relevant.filter { $0.winner == p1 }.count
-                let w2 = relevant.filter { $0.winner == p2 }.count
+                let w1 = relevant.filter { $0.winner?.id == p1.id }.count
+                let w2 = relevant.filter { $0.winner?.id == p2.id }.count
 
                 if (w1 + w2) > 0 {
-                    results.append(H2HStat(player1: p1, player2: p2, wins1: w1, wins2: w2))
+                    results.append(H2HStat(player1: p1.name, player2: p2.name, wins1: w1, wins2: w2))
                 }
             }
         }
         return results
     }
 
-    static func breakStats(matches: [Match], players: [String]) -> (overall: Double, perPlayer: [BreakStat], total: Int)? {
-        let tracked = matches.filter { !$0.breaker.isEmpty }
+    static func breakStats(matches: [Match], players: [Player]) -> (overall: Double, perPlayer: [BreakStat], total: Int)? {
+        let tracked = matches.filter { $0.isValid && $0.breaker != nil }
         guard !tracked.isEmpty else { return nil }
 
-        let overallPct = Double(tracked.filter { $0.winner == $0.breaker }.count) / Double(tracked.count) * 100
+        let overallPct = Double(tracked.filter { $0.winner?.id == $0.breaker?.id }.count) / Double(tracked.count) * 100
 
-        let perPlayer: [BreakStat] = players.compactMap { name in
-            let broke = tracked.filter { $0.breaker == name }
-            let notBroke = tracked.filter {
-                $0.breaker != name && ($0.player1 == name || $0.player2 == name)
+        let perPlayer: [BreakStat] = players.compactMap { player in
+            let broke = tracked.filter { $0.breaker?.id == player.id }
+            let notBroke = tracked.filter { match in
+                guard let b = match.breaker else { return false }
+                return b.id != player.id && 
+                       (match.player1?.id == player.id || match.player2?.id == player.id)
             }
             guard (broke.count + notBroke.count) > 0 else { return nil }
             return BreakStat(
-                player: name,
+                player: player.name,
                 broke: broke.count,
-                brokeWon: broke.filter { $0.winner == name }.count,
+                brokeWon: broke.filter { $0.winner?.id == player.id }.count,
                 notBroke: notBroke.count,
-                notBrokeWon: notBroke.filter { $0.winner == name }.count
+                notBrokeWon: notBroke.filter { $0.winner?.id == player.id }.count
             )
         }.sorted { $0.brkPct > $1.brkPct }
 

@@ -1,0 +1,30 @@
+import SwiftUI
+import SwiftData
+
+@main
+struct PoolScorekeeperApp: App {
+    let container: ModelContainer
+
+    init() {
+        do {
+            // TEMPORARY: In-memory database for testing
+            // This will lose data when app closes but avoids migration issues
+            let schema = Schema([Player.self, Match.self])
+            let config = ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: true  // ← Change to true for testing
+            )
+            
+            container = try ModelContainer(for: schema, configurations: config)
+        } catch {
+            fatalError("Failed to create container: \(error.localizedDescription)")
+        }
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+        .modelContainer(container)
+    }
+}
