@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RecoverTrack — Support</title>
+<style>
+  :root { --teal:#159C77; --teal-dark:#0F6E56; --ink:#1c2b27; --muted:#5a6b66; --line:#e3ece9; --bg:#f7fbf9; --card:#ffffff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+         color:var(--ink); background:var(--bg); line-height:1.6; }
+  .wrap { max-width:640px; margin:0 auto; padding:44px 22px 72px; }
+  .logo { font-size:44px; text-align:center; margin-bottom:6px; }
+  h1 { font-size:30px; text-align:center; margin:0 0 4px; letter-spacing:-0.4px; }
+  .tag { text-align:center; color:var(--muted); font-size:16px; margin-bottom:34px; }
+  h2 { font-size:19px; margin:32px 0 8px; color:var(--teal); }
+  p { font-size:16px; color:#2a3a35; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px; margin-top:18px; }
+  label { display:block; font-size:14px; font-weight:600; color:var(--ink); margin:14px 0 6px; }
+  input, select, textarea { width:100%; padding:11px 13px; font-size:15px; border:1px solid var(--line);
+         border-radius:10px; font-family:inherit; background:#fff; color:var(--ink); }
+  textarea { min-height:120px; resize:vertical; }
+  button { margin-top:18px; width:100%; padding:13px; font-size:16px; font-weight:600; color:#fff;
+         background:var(--teal); border:none; border-radius:11px; cursor:pointer; }
+  button:hover { background:var(--teal-dark); }
+  .disc { background:#eaf6f1; border:1px solid #cfe8df; border-radius:12px; padding:14px 16px; margin-top:26px; font-size:14px; color:#2a3a35; }
+  .disc strong { color:var(--teal); }
+  footer { margin-top:44px; text-align:center; color:var(--muted); font-size:14px; }
+  a { color:var(--teal); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">&#128138;</div>
+  <h1>RecoverTrack</h1>
+  <div class="tag">Recovery &amp; symptom tracking</div>
+
+  <h2>About</h2>
+  <p>RecoverTrack helps you track your recovery — daily check-ins, pain and mobility,
+  exercises, medications, and appointments — and share a clear report with your therapist
+  or doctor. All of your data stays private on your device and your own iCloud.</p>
+
+  <h2>Privacy</h2>
+  <p>RecoverTrack stores all data locally on your device and in your personal iCloud
+  account. We do not collect, share, or sell any personal information, and no account is
+  required. Read the full <a href="privacy.html">Privacy Policy</a>.</p>
+
+  <h2>Get in touch</h2>
+  <p>Have a question, found a bug, or want to suggest an improvement? Send us a message
+  and we'll get back to you.</p>
+
+  <div class="card">
+    <!-- RecoverTrack Formspree form -->
+    <form action="https://formspree.io/f/xgawqdlq" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="type">Request type</label>
+      <select id="type" name="request_type">
+        <option value="support">&#128295; Support Request</option>
+        <option value="improvement">&#128161; Improvement Request</option>
+        <option value="question">&#10067; General Question</option>
+      </select>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit">Send Message &#128138;</button>
+    </form>
+  </div>
+
+  <div class="disc">
+    <strong>Not medical advice.</strong> RecoverTrack is a personal wellness and tracking
+    tool, not a medical device. It does not diagnose, treat, or provide medical advice.
+    Always consult a qualified healthcare professional about your treatment.
+  </div>
+
+  <footer>&copy; 2026 RecoverTrack. All rights reserved.</footer>
+</div>
+</body>
+</html>
